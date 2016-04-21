@@ -1,0 +1,8 @@
+---
+
+- name: Copy Kibana repo
+  copy:
+    src=kibana.repo dest=/etc/yum.repos.d/kibana.repo
+
+- name: Install Kibana
+  yum: name=kibana state=installed

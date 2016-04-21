@@ -1,0 +1,11 @@
+---
+#
+# Playbook to install the filebeat
+#
+- name: Setup filebeat
+  hosts: "{{ target }}"
+  become: yes
+  become_method: sudo
+  roles:
+    - filebeat
+

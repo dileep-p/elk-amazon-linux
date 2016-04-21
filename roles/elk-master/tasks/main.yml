@@ -1,0 +1,22 @@
+---
+# tasks file for ansible-elk
+
+- name: Install Elasticsearch
+  include: elasticsearch.yml
+  when: elasticsearch_install
+
+- name: Install Kibana
+  include: kibana.yml
+  when: kibana_install
+
+- name: Install Nginx
+  include: nginx.yml
+  when: kibana_install
+
+- name: Install Logstash
+  include: logstash.yml
+  when: logstash_install
+
+- name: Load Kibana dashboards
+  include: dashboard.yml
+  when: kibana_install

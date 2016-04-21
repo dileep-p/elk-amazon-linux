@@ -1,0 +1,3 @@
+---
+# defaults file for filebeat
+logstash_server: logstash.propertyfinder.local

@@ -1,0 +1,38 @@
+---
+#
+# install/run filebeat elk client
+#
+
+- name: Copy filebeat yum repo file
+  copy:
+    src=filebeat.repo
+    dest=/etc/yum.repos.d/filebeat.repo
+    owner=root
+    group=root
+    mode=0644
+  become: true
+
+- name: Import filebeat GPG key
+  command: rpm --import http://packages.elastic.co/GPG-KEY-elasticsearch
+  ignore_errors: true
+  become: true
+
+- name: Install filebeat rpms
+  yum: name={{ item }} state=present
+  become: true
+  with_items:
+    - filebeat
+
+- name: Generate filebeat configuration template
+  template:
+    src=filebeat.yml.j2
+    dest=/etc/filebeat/filebeat.yml
+    owner=root
+    group=root
+    mode=0644
+  become: true
+  register: filebeat_needs_restart
+
+- name: Setup filebeat service
+  service: name=filebeat state=started enabled=true
+  become: true
